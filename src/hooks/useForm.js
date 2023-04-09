@@ -13,10 +13,7 @@ export function useForm(init = {}) {
     const withoutValid = k => k !== "valid";
 
     form.valid = computed(() => {
-        return Object.keys(form).filter(withoutValid).reduce((acc, key) => {
-            acc = form[key].valid;
-            return acc && form[key].valid;
-        }, true)
+        return Object.keys(form).filter(withoutValid).every(key => form[key].valid)
     })
 
     return form;

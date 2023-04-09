@@ -39,8 +39,8 @@ import {ref} from "vue";
 import {useRouter} from "vue-router";
 import {useStore} from "vuex";
 
-const required = val => !!val;
-const minLength = number => val => val.length >= number;
+const required = val => !!val.trim();
+const minLength = number => val => val.trim().length >= number;
 
 export default {
   setup() {
