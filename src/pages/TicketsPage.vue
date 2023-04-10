@@ -7,14 +7,14 @@
       </div>
       <div class="form__control">
         <label for="title">Заголовок</label>
-        <input id="title" type="text">
+        <input v-model="title" id="title" type="text">
       </div>
       <div class="form__control">
         <label for="desc">Описание</label>
-        <input id="desc" type="text">
+        <input v-model="body" id="desc" type="text">
       </div>
       <div class="btns__wrapper">
-        <button class="controls__btn save_btn" @click="toggleOpen">Добавить</button>
+        <button class="controls__btn save_btn" @click="addTicket">Добавить</button>
         <button class="controls__btn close_btn" @click="toggleOpen">Закрыть</button>
       </div>
     </div>
@@ -42,12 +42,30 @@
 <script>
 import {useTickets} from "@/hooks/useTickets";
 import {ref} from "vue";
+import loginPage from "@/pages/LoginPage";
 
 export default {
   async setup() {
+    const title = ref("");
+    const body = ref("");
+
+
     const isOpen = ref(false);
     const toggleOpen = () => {
       isOpen.value = !isOpen.value;
+    }
+
+    const addTicket = () => {
+      toggleOpen();
+      if (!title.value || !body.value) return;
+      const newTicket = {
+        id: Date.now(),
+        title: title.value,
+        body: body.value,
+      }
+      tickets.value.push(newTicket);
+      title.value = "";
+      body.value = "";
     }
 
 
@@ -56,6 +74,9 @@ export default {
       tickets,
       isOpen,
       toggleOpen,
+      addTicket,
+      title,
+      body,
     }
   }
 }
